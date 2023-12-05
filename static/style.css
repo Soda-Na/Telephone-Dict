@@ -67,6 +67,18 @@ input {
     background-color: lightblue;
 }
 
+.Employee {
+    width: 25%;
+}.Post {
+    width: 30%;
+}.Email {
+    width: 20%;
+}.ExtensionPhone {
+    width: 5%;
+}.Phone {
+    width: 20%;
+}
+
 #table_contacts tr:nth-child(even) {
     background-color: lightgray;
 }

@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    data = pd.read_excel("телефоны.xlsx")
+    data = pd.read_excel("телефоны.xlsx", dtype={'Внутренний номер телефона': 'object'})
     groups = data.groupby("Отдел")
     departaments = []
     for name, group in groups:
@@ -25,12 +25,11 @@ def index():
                 "contacts": group.fillna('не указано').values.tolist()
             } 
         )
-    print(departaments)
     return render_template("index.html", departaments=departaments)
 
 @app.route("/search")
 def search():
-    contacts = pd.read_excel("телефоны.xlsx")
+    contacts = pd.read_excel("телефоны.xlsx", dtype={'Внутренний номер телефона': 'object'})
     query = request.args.get("query", "").lower()
 
     if query:

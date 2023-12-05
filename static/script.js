@@ -8,7 +8,6 @@ input.addEventListener("input", function() {
   xhr.onload = function() {
     if (xhr.status == 200) {
       var response = JSON.parse(xhr.responseText);
-      console.log(response.length);
       body.innerHTML = "";
       var departament_container = ``;
       for (var i = 0; i < response.length; i++){
@@ -41,7 +40,6 @@ input.addEventListener("input", function() {
         }
         departament_container+= "</table></div></div>";
       }
-    console.log(departament_container);
     body.innerHTML += departament_container;
     }
   };
