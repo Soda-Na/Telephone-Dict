@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Справочник</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body id="main_body">
+    <h1>Телефонный справочник</h1>
+    <form id="form">
+        <input type="text" id="query" placeholder="Поиск по имени, номеру телефона или отделу">
+    </form>
+    <div id="dict_container">
+        {% for departament in departaments %}
+        <div class="departament_container">
+            <div class="departament_name_container">
+                {{ departament.get('name') }}
+            </div>
+            <div class="departament_contacts_container">
+                <table id="table_contacts">
+                    <thead>
+                        <tr>
+                            <th>Сотрудник</th>
+                            <th>Должность</th>
+                            <th>Почта</th>
+                            <th>Внутреннний номер телефона</th>
+                            <th>Номер телефона</th>
+                        </tr>
+                    </thead>
+                    {% for contact in departament.get('contacts') %}
+                    <tr class="table_contacts_container">
+                        <th>{{ contact[1] }}</th>
+                        <th>{{ contact[2] }}</th>
+                        <th>{{ contact[3] }}</th>
+                        <th>{{ contact[5] }}</th>
+                        <th>{{ contact[6] }}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <style></style>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>.
+</body>
+</html>
