@@ -77,7 +77,10 @@ input {
     width: 5%;
 }.Phone {
     width: 20%;
+}.Departament{
+    width: 20%;
 }
+
 
 #table_contacts tr:nth-child(even) {
     background-color: lightgray;
@@ -85,5 +88,13 @@ input {
 
 #table_contacts tr.table_contacts_container th {
     text-align: left;
+}
+
+img {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 10%;
+    min-width: 120px;
 }
   

@@ -19,13 +19,25 @@ def index():
     groups = data.groupby("Отдел")
     departaments = []
     for name, group in groups:
+        if name.lower().strip() == "администрация":
+            departaments.insert(0, 
+                {
+                    "name": name, 
+                    "contacts": group.fillna('не указано').values.tolist()
+                }
+            )
+            continue
         departaments.append(
             {
                 "name": name,
                 "contacts": group.fillna('не указано').values.tolist()
             } 
         )
-    return render_template("index.html", departaments=departaments)
+    department_and_mail = data.iloc[:, 8:10]
+    department_and_mail = department_and_mail.dropna()[1:]
+    department_and_mail.columns = ['Отдел', 'Почта']
+
+    return render_template("index.html", departaments=departaments, emails=department_and_mail)
 
 @app.route("/search")
 def search():
@@ -44,6 +56,14 @@ def search():
     groups = contacts.groupby("Отдел")
     departaments = []
     for name, group in groups:
+        if name == "Администрация":
+            departaments.insert(0, 
+                {
+                    "name": name, 
+                    "contacts": group.fillna('не указано').values.tolist()
+                }
+            )
+            continue
         departaments.append(
             {
                 "name": name,

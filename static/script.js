@@ -8,6 +8,13 @@ input.addEventListener("input", function() {
   xhr.onload = function() {
     if (xhr.status == 200) {
       var response = JSON.parse(xhr.responseText);
+      if (query != ""){
+        document.getElementById("emails_departament").style.display = "none";
+      }
+      else{
+        document.getElementById("emails_departament").style.display = "block";
+      }
+
       body.innerHTML = "";
       var departament_container = ``;
       for (var i = 0; i < response.length; i++){
@@ -20,11 +27,11 @@ input.addEventListener("input", function() {
             <table id="table_contacts">
                 <thead>
                     <tr>
-                        <th>Сотрудник</th>
-                        <th>Должность</th>
-                        <th>Почта</th>
-                        <th>Внутреннний номер телефона</th>
-                        <th>Номер телефона</th>
+                        <th class="Employee">Сотрудник</th>
+                        <th class="Post">Должность</th>
+                        <th class="Email">Почта</th>
+                        <th class="ExtensionPhone">Внутреннний номер телефона</th>
+                        <th class="Phone">Номер телефона</th>
                     </tr>
                 </thead>`;
         for (var j = 0; j < response[i]["contacts"].length; j++){

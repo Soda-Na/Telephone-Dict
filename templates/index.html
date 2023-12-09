@@ -5,6 +5,7 @@
 </head>
 <body id="main_body">
     <h1>Телефонный справочник</h1>
+    <img src="{{ url_for('static', filename='image 1.png') }}" alt="иконка">
     <form id="form">
         <input type="text" id="query" placeholder="Поиск по имени, номеру телефона или отделу">
     </form>
@@ -39,7 +40,29 @@
         </div>
         {% endfor %}
     </div>
-    <style></style>
+    <div id="emails_departament">
+        <div class="departament_container">
+            <div class="departament_name_container">
+                Почты для рассылок
+            </div>
+            <div class="departament_contacts_container">
+                <table id="table_contacts">
+                    <thead>
+                        <tr>
+                            <th class="Departament">Отдел</th>
+                            <th class="Email">Почта</th>
+                        </tr>
+                    </thead>
+                    {% for index, email in emails.iterrows() %}
+                    <tr class="table_contacts_container">
+                        <th>{{ email['Отдел'] }}</th>
+                        <th>{{ email['Почта'] }}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>  
     <script src="{{ url_for('static', filename='script.js') }}"></script>.
 </body>
 </html>
