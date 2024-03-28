@@ -1,5 +1,5 @@
 try:
-    from flask import Flask, render_template, request, jsonify
+    from flask import Flask, render_template, request, jsonify, send_file   
     import pandas as pd
 except ImportError:
     print("Необходимые библиотеки отсутствуют. Устанавливаю...")
@@ -72,6 +72,21 @@ def search():
         )
 
     return jsonify(departaments)
+
+@app.route("/upload")
+def upload():
+    return render_template("upload.html")
+
+@app.route("/upload/download")
+def download():
+    return send_file("телефоны.xlsx", as_attachment=True)
+
+@app.route("/upload", methods=["POST"])
+def upload_file():
+    file = request.files["file"]
+    file.save("телефоны.xlsx")
+    return index()
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port='80')

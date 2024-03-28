@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload and Download</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .button {
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/upload/download" class="button">Скачать</a>
+        <form id="upload-form" method="POST" enctype="multipart/form-data">
+            <label for="file-upload" class="button">Загрузить</label>
+            <input id="file-upload" type="file" name="file" style="display: none;">
+        </form>
+        
+        <script>
+            document.getElementById('file-upload').addEventListener('change', function() {
+                document.getElementById('upload-form').submit();
+            });
+        </script>
+    </div>
+</body>
+</html>
