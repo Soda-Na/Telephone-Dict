@@ -1,25 +1,33 @@
+// Функция дебаунса
+function debounce(func, delay) {
+  let timeout;
+  return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   const input = document.getElementById("query");
   const dictContainer = document.getElementById("dict_container");
   const emailsDepartament = document.getElementById("emails_departament");
   let departaments = departamentsData;
 
-  input.addEventListener("input", function() {
+  // Обработка ввода с дебаунсом 300ms
+  input.addEventListener("input", debounce(function() {
       const query = input.value.toLowerCase().trim();
       filterDepartaments(query);
-  });
+  }, 300));
 
   function filterDepartaments(query) {
       dictContainer.innerHTML = "";
       let filteredDepartaments = [];
 
-      // Фильтруем данные на клиенте
+      // Фильтрация данных
       departaments.forEach(dept => {
           const matchesDept = dept.name.toLowerCase().includes(query);
           const filteredContacts = dept.contacts.filter(contact => {
-              return Object.values(contact).some(value =>
-                  String(value).toLowerCase().includes(query)
-              );
+              return Object.values(contact).some(value => String(value).toLowerCase().includes(query));
           });
 
           if (matchesDept || filteredContacts.length > 0) {
@@ -30,21 +38,17 @@ document.addEventListener("DOMContentLoaded", function() {
           }
       });
 
-      // Сортируем, чтобы "Администрация" была первой
+      // Сортировка
       filteredDepartaments.sort((a, b) => {
           if (a.name.toLowerCase() === "администрация") return -1;
           if (b.name.toLowerCase() === "администрация") return 1;
           return 0;
       });
 
-      // Если есть запрос, скрываем блок с почтами для рассылок
-      if (query !== "") {
-          emailsDepartament.style.display = "none";
-      } else {
-          emailsDepartament.style.display = "block";
-      }
+      // Управление видимостью блока почт для рассылок
+      emailsDepartament.style.display = query !== "" ? "none" : "block";
 
-      // Генерация HTML с анимацией
+      // Генерация HTML без анимаций
       filteredDepartaments.forEach(dept => {
           const deptContainer = document.createElement("div");
           deptContainer.className = "departament_container";
@@ -73,11 +77,9 @@ document.addEventListener("DOMContentLoaded", function() {
           table.appendChild(thead);
 
           const tbody = document.createElement("tbody");
-
-          dept.contacts.forEach((contact, index) => {
+          dept.contacts.forEach(contact => {
               const tr = document.createElement("tr");
-              tr.className = "contact_row animate-slide-down";
-              tr.style.animationDelay = `${index * 0.1}s`; // Задержка для последовательности
+              tr.className = "contact_row";
               tr.innerHTML = `
                   <td>${contact[1]}</td>
                   <td>${contact[2]}</td>
@@ -87,11 +89,20 @@ document.addEventListener("DOMContentLoaded", function() {
               `;
               tbody.appendChild(tr);
           });
-
           table.appendChild(tbody);
           contactsContainer.appendChild(table);
           deptContainer.appendChild(contactsContainer);
           dictContainer.appendChild(deptContainer);
+      });
+
+      // Запуск анимации после генерации DOM
+      requestAnimationFrame(() => {
+          const contactRows = dictContainer.querySelectorAll(".contact_row");
+          contactRows.forEach((row, index) => {
+              setTimeout(() => {
+                  row.classList.add("visible");
+              }, index * 100); // Задержка для последовательности
+          });
       });
   }
 

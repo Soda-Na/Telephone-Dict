@@ -15,7 +15,7 @@
     
     <div id="dict_container">
         {% for departament in departaments %}
-            <div class="departament_container">
+            <div class="departament_container hidden">
                 <div class="departament_name_container">{{ departament.name }}</div>
                 <div class="departament_contacts_container">
                     <table class="table_contacts">
@@ -30,7 +30,7 @@
                         </thead>
                         <tbody>
                             {% for contact in departament.contacts %}
-                                <tr class="contact_row">
+                                <tr class="contact_row hidden">
                                     <td>{{ contact[1] }}</td>
                                     <td>{{ contact[2] }}</td>
                                     <td>{{ contact[3] }}</td>
@@ -46,7 +46,7 @@
     </div>
     
     <div id="emails_departament">
-        <div class="departament_container">
+        <div class="departament_container hidden">
             <div class="departament_name_container">Почты для рассылок</div>
             <div class="departament_contacts_container">
                 <table class="table_contacts">

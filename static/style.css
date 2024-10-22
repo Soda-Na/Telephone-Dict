@@ -100,18 +100,17 @@ img {
     background-color: #f3a683;
 }
 
-/* Добавляем анимацию для выдвижения контактов */
-@keyframes slideDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Удалите анимацию slideDown */
+.contact_row {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+.contact_row.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 .animate-slide-down {
     opacity: 0;
     transform: translateY(-20px);
