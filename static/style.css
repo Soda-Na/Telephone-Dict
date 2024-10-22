@@ -1,36 +1,42 @@
-body { 
-    font-family: Arial, sans-serif; 
-    background-color: #f0f0f0; 
-    text-align: center; 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
     position: absolute;
-    display: flex;
-    justify-content: center; 
-    align-items: center;
     top: 50px;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #82b8f3;
-    padding: 5px;
+    padding: 10px 20px;
     border-radius: 5px;
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(46, 44, 44);
 }
-form { 
-    padding: 100px 0 0 0; 
-    margin: 20px auto; 
-    width: 80%; 
+
+form {
+    padding: 150px 0 20px 0;
+    margin: 0 auto;
+    width: 80%;
 }
-input { 
-    display: block; 
-    width: 100%; 
-    padding: 13px; 
-    border: 4px solid #cccccc; 
-    border-radius: 50px; 
-    font-size: 21px; 
+
+input {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    border: 4px solid #cccccc;
+    border-radius: 50px;
+    font-size: 21px;
     outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #82b8f3;
 }
 
 .departament_container {
@@ -40,54 +46,42 @@ input {
 .departament_name_container {
     font-size: 28px;
     text-align: left;
-    left: 5%;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
     background-color: #8cbaeb;
     display: inline-block;
+    margin-bottom: 10px;
 }
 
 .departament_contacts_container {
-    position: relative;
-    padding: 10px 10% 0px 10%;
+    padding: 10px 10%;
 }
 
-#table_contacts {
+.table_contacts {
     width: 100%;
+    border-collapse: collapse;
 }
 
-#table_contacts th, #table_contacts td {
-    border-radius: 5px;
+.table_contacts th, .table_contacts td {
+    border: 1px solid #ddd;
     padding: 10px;
-    font-weight: 200; 
-}
-
-#table_contacts thead th {
-    text-align: center;
-    background-color: lightblue;
-}
-
-.Employee {
-    width: 25%;
-}.Post {
-    width: 30%;
-}.Email {
-    width: 20%;
-}.ExtensionPhone {
-    width: 5%;
-}.Phone {
-    width: 20%;
-}.Departament{
-    width: 20%;
-}
-
-
-#table_contacts tr:nth-child(even) {
-    background-color: lightgray;
-}
-
-#table_contacts tr.table_contacts_container th {
     text-align: left;
+}
+
+.table_contacts th {
+    background-color: lightblue;
+    font-weight: bold;
+}
+
+.Employee { width: 25%; }
+.Post { width: 30%; }
+.Email { width: 20%; }
+.ExtensionPhone { width: 5%; }
+.Phone { width: 20%; }
+.Departament { width: 20%; }
+
+.table_contacts tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 img {
@@ -97,4 +91,48 @@ img {
     width: 10%;
     min-width: 120px;
 }
-  
+
+#emails_departament {
+    margin-top: 30px;
+}
+
+#emails_departament .departament_name_container {
+    background-color: #f3a683;
+}
+
+/* Добавляем анимацию для выдвижения контактов */
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-down {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation-name: slideDown;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    /* Задержка задается динамически в JavaScript */
+}
+
+@media (max-width: 768px) {
+    .departament_name_container, .departament_contacts_container {
+        width: 100%;
+        padding: 5px;
+    }
+
+    h1 {
+        font-size: 24px;
+        padding: 8px 16px;
+    }
+
+    input {
+        font-size: 18px;
+    }
+}

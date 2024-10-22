@@ -1,68 +1,77 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Справочник</title>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 </head>
 <body id="main_body">
     <h1>Телефонный справочник</h1>
     <img src="{{ url_for('static', filename='image 1.png') }}" alt="иконка">
+    
     <form id="form">
         <input type="text" id="query" placeholder="Поиск по имени, номеру телефона или отделу">
     </form>
+    
     <div id="dict_container">
         {% for departament in departaments %}
-        <div class="departament_container">
-            <div class="departament_name_container">
-                {{ departament.get('name') }}
+            <div class="departament_container">
+                <div class="departament_name_container">{{ departament.name }}</div>
+                <div class="departament_contacts_container">
+                    <table class="table_contacts">
+                        <thead>
+                            <tr>
+                                <th class="Employee">Сотрудник</th>
+                                <th class="Post">Должность</th>
+                                <th class="Email">Почта</th>
+                                <th class="ExtensionPhone">Внутренний номер телефона</th>
+                                <th class="Phone">Номер телефона</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in departament.contacts %}
+                                <tr class="contact_row">
+                                    <td>{{ contact[1] }}</td>
+                                    <td>{{ contact[2] }}</td>
+                                    <td>{{ contact[3] }}</td>
+                                    <td>{{ contact[5] }}</td>
+                                    <td>{{ contact[6] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="departament_contacts_container">
-                <table id="table_contacts">
-                    <thead>
-                        <tr>
-                            <th class="Employee">Сотрудник</th>
-                            <th class="Post">Должность</th>
-                            <th class="Email">Почта</th>
-                            <th class="ExtensionPhone">Внутреннний номер телефона</th>
-                            <th class="Phone">Номер телефона</th>
-                        </tr>
-                    </thead>
-                    {% for contact in departament.get('contacts') %}
-                    <tr class="table_contacts_container">
-                        <th>{{ contact[1] }}</th>
-                        <th>{{ contact[2] }}</th>
-                        <th>{{ contact[3] }}</th>
-                        <th>{{ contact[5] }}</th>
-                        <th>{{ contact[6] }}</th>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </div>
         {% endfor %}
     </div>
+    
     <div id="emails_departament">
         <div class="departament_container">
-            <div class="departament_name_container">
-                Почты для рассылок
-            </div>
+            <div class="departament_name_container">Почты для рассылок</div>
             <div class="departament_contacts_container">
-                <table id="table_contacts">
+                <table class="table_contacts">
                     <thead>
                         <tr>
                             <th class="Departament">Отдел</th>
                             <th class="Email">Почта</th>
                         </tr>
                     </thead>
-                    {% for index, email in emails.iterrows() %}
-                    <tr class="table_contacts_container">
-                        <th>{{ email['Отдел'] }}</th>
-                        <th>{{ email['Почта'] }}</th>
-                    </tr>
-                    {% endfor %}
+                    <tbody>
+                        {% for email in emails.itertuples() %}
+                            <tr>
+                                <td>{{ email.Отдел }}</td>
+                                <td>{{ email.Почта }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>
-    </div>  
-    <script src="{{ url_for('static', filename='script.js') }}"></script>.
+    </div>
+    
+    <script>
+        const departamentsData = {{ departaments | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
